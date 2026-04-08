@@ -1,0 +1,37 @@
+@model IEnumerable<NorthwindTechUniversity.Web.Models.Course>
+@{
+    ViewBag.Title = "Courses";
+}
+
+<h2>Courses</h2>
+
+<p>
+    @Html.ActionLink("Create New Course", "Create", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Credits</th>
+            <th>Department</th>
+            <th>Max Capacity</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.Credits)</td>
+                <td>@Html.DisplayFor(modelItem => item.Department.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.MaxCapacity)</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }, new { @class = "btn btn-sm btn-warning" })
+                    @Html.ActionLink("Details", "Details", new { id = item.CourseId }, new { @class = "btn btn-sm btn-info" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

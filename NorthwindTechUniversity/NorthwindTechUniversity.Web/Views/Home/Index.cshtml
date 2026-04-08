@@ -1,0 +1,73 @@
+@model NorthwindTechUniversity.Web.Models.ViewModels.DashboardViewModel
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<div class="jumbotron">
+    <h1>Northwind Technical University</h1>
+    <p class="lead">Student Enrollment & Course Management System</p>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Total Students</h3>
+            </div>
+            <div class="panel-body">
+                <h2>@Model.TotalStudents</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Total Courses</h3>
+            </div>
+            <div class="panel-body">
+                <h2>@Model.TotalCourses</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Total Enrollments</h3>
+            </div>
+            <div class="panel-body">
+                <h2>@Model.TotalEnrollments</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title">Total Faculty</h3>
+            </div>
+            <div class="panel-body">
+                <h2>@Model.TotalFaculty</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Quick Actions</h2>
+        <p>
+            @Html.ActionLink("Add New Student", "Create", "Student", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Add New Course", "Create", "Course", null, new { @class = "btn btn-success" })
+            @Html.ActionLink("Add Enrollment", "Create", "Enrollment", null, new { @class = "btn btn-info" })
+        </p>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        // Legacy: jQuery inline scripts (should be in separate JS file)
+        $(document).ready(function() {
+            console.log("Dashboard loaded");
+            // TODO: Add AJAX refresh for stats
+        });
+    </script>
+}
