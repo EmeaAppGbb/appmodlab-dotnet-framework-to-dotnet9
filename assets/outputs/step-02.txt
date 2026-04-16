@@ -1,0 +1,47 @@
+Step 02: Analyze Dependencies
+=============================
+
+NUGET PACKAGES (29 packages from packages.config):
+
+FRAMEWORK-SPECIFIC (Cannot migrate directly - must replace):
+  - Microsoft.AspNet.Mvc 5.2.7 → Microsoft.AspNetCore.Mvc (built-in)
+  - Microsoft.AspNet.Razor 3.2.7 → Built into ASP.NET Core
+  - Microsoft.AspNet.WebPages 3.2.7 → Built into ASP.NET Core
+  - Microsoft.AspNet.Web.Optimization 1.1.3 → WebOptimizer or bundleconfig
+  - Microsoft.AspNet.Identity.Core 2.2.3 → Microsoft.AspNetCore.Identity
+  - Microsoft.AspNet.Identity.EntityFramework 2.2.3 → Microsoft.AspNetCore.Identity.EntityFrameworkCore
+  - Microsoft.AspNet.Identity.Owin 2.2.3 → Built-in ASP.NET Core Identity middleware
+  - Microsoft.Owin* 4.0.1 (7 packages) → Not needed (ASP.NET Core has built-in middleware)
+  - Microsoft.Web.Infrastructure 1.0.0.0 → Not needed
+  - Unity 5.11.10 → Built-in Microsoft.Extensions.DependencyInjection
+  - Unity.Mvc5 1.4.0 → Not needed
+  - Antlr 3.5.0.2 → Not needed (was WebGrease dependency)
+  - WebGrease 1.6.0 → Not needed
+
+CROSS-PLATFORM (Can migrate with updates):
+  - EntityFramework 6.4.4 → Microsoft.EntityFrameworkCore.SqlServer 9.x
+  - AutoMapper 6.2.2 → AutoMapper 13.x (instance-based API)
+  - Newtonsoft.Json 12.0.2 → System.Text.Json (built-in) or keep Newtonsoft
+  - jQuery 2.2.4 → jQuery 3.7.x or keep (client-side)
+  - bootstrap 3.4.1 → Bootstrap 5.x
+  - Modernizr 2.8.3 → Drop (not needed for modern browsers)
+
+FRAMEWORK-SPECIFIC APIS DETECTED:
+  - System.Web.Mvc.Controller → Microsoft.AspNetCore.Mvc.Controller
+  - System.Web.HttpApplication → Program.cs / WebApplication
+  - System.Web.Mvc.ActionResult → Microsoft.AspNetCore.Mvc.IActionResult
+  - System.Web.Optimization (BundleConfig) → WebOptimizer or manual
+  - System.Web.Mvc.DependencyResolver → Built-in DI
+  - System.Web.Routing.RouteCollection → Endpoint routing
+  - System.Web.Mvc.GlobalFilterCollection → Middleware pipeline
+  - System.Web.Mvc.AreaRegistration → Area conventions
+  - System.Data.Entity.DbContext → Microsoft.EntityFrameworkCore.DbContext
+  - Owin.IAppBuilder → IApplicationBuilder (middleware)
+  - Microsoft.AspNet.Identity → Microsoft.AspNetCore.Identity
+
+CONNECTION STRINGS:
+  - DefaultConnection: LocalDB with AttachDbFilename (must update for EF Core)
+  - NorthwindTechContext: Same LocalDB connection
+
+ASSEMBLY BINDING REDIRECTS (11 entries):
+  - All will be eliminated with SDK-style project
