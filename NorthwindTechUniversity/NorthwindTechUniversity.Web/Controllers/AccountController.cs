@@ -1,5 +1,6 @@
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using NorthwindTechUniversity.Web.Models;
 

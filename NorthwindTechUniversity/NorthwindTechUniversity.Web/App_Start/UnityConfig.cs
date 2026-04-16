@@ -1,9 +1,11 @@
 using System;
 using System.Web.Mvc;
 using Unity;
+using Unity.Lifetime;
 using Unity.Mvc5;
 using NorthwindTechUniversity.Web.Data;
 using NorthwindTechUniversity.Web.Data.Repositories;
+using NorthwindTechUniversity.Web.Models;
 
 namespace NorthwindTechUniversity.Web.App_Start
 {
