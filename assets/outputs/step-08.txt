@@ -1,0 +1,64 @@
+Step 08: Build & Fix
+====================
+
+BUILD RESULT: SUCCESS - 0 errors, 0 warnings
+
+FIXES APPLIED:
+1. Renamed Model 'Program' → 'AcademicProgram' to avoid conflict with
+   auto-generated Program class from top-level statements in .NET 9
+   - Updated Student.cs FK reference
+   - Updated NorthwindTechContext.cs DbSet
+   - Updated NorthwindTechDbInitializer.cs seed data
+
+2. Fixed nullable warnings:
+   - DashboardViewModel: Added default initializers for List properties
+   - Course/Index.cshtml: Added null-forgiving operator for Department.Name
+
+FINAL PROJECT STRUCTURE:
+  NorthwindTechUniversity.Web/
+  ├── Program.cs                    (NEW - minimal hosting)
+  ├── appsettings.json              (NEW - replaces Web.config)
+  ├── appsettings.Development.json  (NEW)
+  ├── NorthwindTechUniversity.Web.csproj (SDK-style, net9.0)
+  ├── Controllers/
+  │   ├── HomeController.cs         (ASP.NET Core)
+  │   ├── StudentController.cs      (ASP.NET Core + IMapper)
+  │   ├── CourseController.cs       (ASP.NET Core)
+  │   ├── EnrollmentController.cs   (ASP.NET Core + IMapper)
+  │   ├── FacultyController.cs      (ASP.NET Core)
+  │   ├── GradeController.cs        (ASP.NET Core)
+  │   └── AccountController.cs      (ASP.NET Core)
+  ├── Data/
+  │   ├── NorthwindTechContext.cs    (EF Core 9)
+  │   ├── NorthwindTechDbInitializer.cs (Static seeder)
+  │   └── Repositories/
+  │       ├── IRepository.cs
+  │       ├── StudentRepository.cs
+  │       ├── CourseRepository.cs
+  │       └── UnitOfWork.cs
+  ├── Models/
+  │   ├── Student.cs, Course.cs, Enrollment.cs
+  │   ├── Faculty.cs, Department.cs, AcademicProgram.cs
+  │   ├── IdentityModels.cs (placeholder)
+  │   └── ViewModels/ (DashboardViewModel, StudentViewModel, EnrollmentViewModel)
+  ├── Mappings/
+  │   └── AutoMapperConfig.cs       (Profile-based)
+  ├── Views/ (all updated for ASP.NET Core)
+  │   ├── _ViewImports.cshtml       (NEW - tag helpers)
+  │   ├── _ViewStart.cshtml
+  │   ├── Shared/_Layout.cshtml     (tag helpers, static files)
+  │   └── ... (all views preserved)
+  └── wwwroot/
+      ├── css/Site.css
+      └── lib/jquery.min.js, bootstrap.min.js
+
+MIGRATION SUMMARY:
+  .NET Framework 4.8 → .NET 9.0
+  ASP.NET MVC 5 → ASP.NET Core MVC
+  Entity Framework 6 → Entity Framework Core 9
+  Unity DI → Built-in Microsoft.Extensions.DependencyInjection
+  AutoMapper 6 (static) → AutoMapper 12 (DI/Profile)
+  OWIN → Built-in ASP.NET Core middleware
+  Web.config → appsettings.json
+  packages.config → PackageReferences
+  System.Web.* → Microsoft.AspNetCore.*

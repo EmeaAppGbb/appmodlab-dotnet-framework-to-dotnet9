@@ -30,7 +30,7 @@ namespace NorthwindTechUniversity.Web.Models
         public int? ProgramId { get; set; }
 
         [ForeignKey("ProgramId")]
-        public virtual Program? Program { get; set; }
+        public virtual AcademicProgram? Program { get; set; }
 
         [NotMapped]
         public string FullName => $"{FirstName} {LastName}";

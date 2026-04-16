@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace NorthwindTechUniversity.Web.Models.ViewModels
 {
     public class DashboardViewModel
@@ -9,7 +7,7 @@ namespace NorthwindTechUniversity.Web.Models.ViewModels
         public int TotalEnrollments { get; set; }
         public int TotalFaculty { get; set; }
         
-        public List<Student> RecentStudents { get; set; }
-        public List<Enrollment> RecentEnrollments { get; set; }
+        public List<Student> RecentStudents { get; set; } = new();
+        public List<Enrollment> RecentEnrollments { get; set; } = new();
     }
 }

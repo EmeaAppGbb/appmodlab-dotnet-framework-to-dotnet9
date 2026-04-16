@@ -49,11 +49,11 @@ namespace NorthwindTechUniversity.Web.Data
             context.SaveChanges();
 
             // Seed Programs
-            var programs = new List<Program>
+            var programs = new List<AcademicProgram>
             {
-                new Program { ProgramId = 1, Name = "Bachelor of Science in Computer Science", DepartmentId = 1, RequiredCredits = 120, Description = "Comprehensive CS program" },
-                new Program { ProgramId = 2, Name = "Bachelor of Engineering", DepartmentId = 2, RequiredCredits = 128, Description = "General engineering program" },
-                new Program { ProgramId = 3, Name = "Master of Business Administration", DepartmentId = 3, RequiredCredits = 60, Description = "MBA program" }
+                new AcademicProgram { ProgramId = 1, Name = "Bachelor of Science in Computer Science", DepartmentId = 1, RequiredCredits = 120, Description = "Comprehensive CS program" },
+                new AcademicProgram { ProgramId = 2, Name = "Bachelor of Engineering", DepartmentId = 2, RequiredCredits = 128, Description = "General engineering program" },
+                new AcademicProgram { ProgramId = 3, Name = "Master of Business Administration", DepartmentId = 3, RequiredCredits = 60, Description = "MBA program" }
             };
             context.Programs.AddRange(programs);
             context.SaveChanges();

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindTechUniversity.Web.Models
 {
-    public class Program
+    public class AcademicProgram
     {
         [Key]
         public int ProgramId { get; set; }

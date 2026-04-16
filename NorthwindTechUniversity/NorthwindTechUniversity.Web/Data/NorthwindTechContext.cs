@@ -15,7 +15,7 @@ namespace NorthwindTechUniversity.Web.Data
         public DbSet<Enrollment> Enrollments { get; set; } = null!;
         public DbSet<Faculty> Faculties { get; set; } = null!;
         public DbSet<Department> Departments { get; set; } = null!;
-        public DbSet<Program> Programs { get; set; } = null!;
+        public DbSet<AcademicProgram> Programs { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
