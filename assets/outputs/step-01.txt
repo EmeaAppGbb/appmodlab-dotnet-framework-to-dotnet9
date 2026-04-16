@@ -1,0 +1,43 @@
+Step 01: Explore Legacy .NET Framework Codebase
+================================================
+
+Project: NorthwindTechUniversity - ASP.NET MVC 5 on .NET Framework 4.8
+
+SOLUTION STRUCTURE:
+- Single project solution: NorthwindTechUniversity.Web
+- Target Framework: .NET Framework 4.8
+- Project Type: ASP.NET MVC 5 Web Application
+
+KEY TECHNOLOGIES:
+- Entity Framework 6.4.4 (EF6)
+- ASP.NET MVC 5.2.7
+- Unity DI Container 5.11.10
+- AutoMapper 6.2.2 (static API)
+- ASP.NET Identity 2.0 + OWIN Cookie Auth
+- Bootstrap 3.4.1 / jQuery 2.2.4
+- Razor View Engine 3.0
+
+CONTROLLERS:
+- HomeController (dashboard stats)
+- StudentController (full CRUD)
+- CourseController (index, create)
+- EnrollmentController (index, create)
+- FacultyController (index)
+- GradeController (entry)
+- AccountController (Identity/OWIN login)
+All controllers are synchronous (no async/await).
+
+DATA LAYER:
+- NorthwindTechContext : DbContext (EF6)
+- Entities: Student, Course, Enrollment, Faculty, Department, Program
+- Generic IRepository<T> + UnitOfWork pattern
+- NorthwindTechDbInitializer seed data
+
+CONFIGURATION:
+- Web.config: connection strings, assembly bindings, EF settings
+- packages.config: 27 NuGet packages
+- OWIN Startup: Cookie authentication
+- Global.asax: Area registration, filters, routes, bundles, DI, AutoMapper
+
+BUILD RESULT: SUCCESS (MSBuild v17.14, 0 errors, 1 warning)
+Warning: Unity.Abstractions binding redirect needed
