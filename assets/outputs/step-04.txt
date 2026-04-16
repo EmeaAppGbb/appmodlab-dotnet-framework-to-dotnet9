@@ -1,0 +1,32 @@
+Step 04: Update Project Files
+=============================
+
+CHANGES MADE:
+1. Converted .csproj from legacy XML format to SDK-style
+   - TargetFramework: net9.0
+   - ImplicitUsings: enable
+   - Nullable: enable
+
+2. Added modern NuGet PackageReferences:
+   - Microsoft.EntityFrameworkCore.SqlServer 9.0.0
+   - Microsoft.EntityFrameworkCore.Tools 9.0.0
+   - AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1
+
+3. Removed legacy files:
+   - packages.config (29 NuGet packages)
+   - Global.asax / Global.asax.cs
+   - Web.config
+   - Views/Web.config
+   - App_Start/ (BundleConfig, FilterConfig, RouteConfig, UnityConfig)
+   - Startup.cs (OWIN)
+
+4. Created wwwroot/ for static files:
+   - wwwroot/css/Site.css
+   - wwwroot/js/
+   - wwwroot/lib/jquery.min.js
+   - wwwroot/lib/bootstrap.min.js
+
+5. Removed legacy directories:
+   - Scripts/ (moved to wwwroot/lib)
+   - Content/ (moved to wwwroot/css)
+   - packages/ (NuGet packages folder)
