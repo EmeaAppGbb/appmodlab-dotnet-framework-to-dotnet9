@@ -16,6 +16,40 @@ video: ""
 version: "1.0.0"
 ---
 
+## Overview
+
+This lab guides you through modernizing **Northwind Tech University** — a fully functional ASP.NET MVC 5 application running on .NET Framework 4.8 — to .NET 9 with ASP.NET Core, Entity Framework Core, and cloud-native patterns. The application manages students, courses, enrollments, and faculty across a university campus.
+
+Here's what the application dashboard looks like before migration:
+
+![Northwind Tech University Dashboard](assets/screenshots/08-app-dashboard.png)
+*The pre-migration dashboard showing student, course, enrollment, and faculty statistics with Bootstrap 3 styling.*
+
+The starting codebase builds cleanly under MSBuild v17.14, confirming a healthy baseline for the migration:
+
+![Successful Build Output](assets/screenshots/00-build-success.png)
+*Clean build with 0 errors — the prerequisite starting state before beginning the modernization process.*
+
+---
+
+## Getting Started
+
+Before diving into the migration steps, familiarize yourself with the existing project layout and verify the build succeeds on your machine.
+
+**1. Verify the build** — Open the solution in Visual Studio 2022 and confirm a successful build targeting .NET Framework 4.8:
+
+![Build Verification](assets/screenshots/00-build-success.png)
+*A successful build confirms all NuGet packages are restored and the project compiles without errors.*
+
+**2. Explore the project structure** — Review the solution layout to understand the MVC 5 conventions, EF6 data layer, and configuration files you'll be migrating:
+
+![Project Structure Overview](assets/screenshots/01-project-structure.png)
+*The legacy project structure with Controllers, Models, Views, and Web.config that will be transformed during migration.*
+
+Once you've confirmed the build and reviewed the structure, proceed to the migration steps below.
+
+---
+
 ## Build & Application Screenshots
 
 > These screenshots document the **pre-migration** state of the Northwind Tech University application — a .NET Framework 4.8 / ASP.NET MVC 5 project targeting migration to .NET 9.
