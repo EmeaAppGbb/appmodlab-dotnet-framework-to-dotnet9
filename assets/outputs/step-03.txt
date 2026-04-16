@@ -1,0 +1,63 @@
+Step 03: Migration Plan - .NET Framework 4.8 to .NET 9
+======================================================
+
+PHASE 1: PROJECT FILE MODERNIZATION
+  1.1 Convert .csproj to SDK-style format
+  1.2 Set TargetFramework to net9.0
+  1.3 Remove packages.config, use PackageReference
+  1.4 Add NuGet packages:
+      - Microsoft.EntityFrameworkCore.SqlServer 9.0.x
+      - Microsoft.EntityFrameworkCore.Tools 9.0.x
+      - Microsoft.AspNetCore.Identity.EntityFrameworkCore 9.0.x (if needed)
+      - AutoMapper.Extensions.Microsoft.DependencyInjection 12.x
+  1.5 Remove legacy files: Global.asax, Global.asax.cs, packages.config
+  1.6 Remove bin/obj/packages folders
+
+PHASE 2: NAMESPACE & API MIGRATION
+  2.1 Replace System.Web.Mvc → Microsoft.AspNetCore.Mvc
+  2.2 Replace ActionResult → IActionResult
+  2.3 Replace Controller base class (System.Web.Mvc → Microsoft.AspNetCore.Mvc)
+  2.4 Replace HttpApplication → WebApplication (Program.cs)
+  2.5 Replace System.Data.Entity → Microsoft.EntityFrameworkCore
+  2.6 Update DbContext: Remove EF6 configuration, add EF Core patterns
+  2.7 Replace Repository pattern with async EF Core patterns
+  2.8 Replace AutoMapper static API with instance-based DI
+  2.9 Update Razor views: Remove @using System.Web.Mvc, update helpers
+  2.10 Replace BundleConfig with static file serving
+
+PHASE 3: DEPENDENCY INJECTION MIGRATION
+  3.1 Remove Unity container entirely
+  3.2 Create Program.cs with WebApplication builder
+  3.3 Register services using built-in DI:
+      - builder.Services.AddControllersWithViews()
+      - builder.Services.AddDbContext<NorthwindTechContext>(...)
+      - builder.Services.AddScoped<IRepository<T>, Repository<T>>()
+      - builder.Services.AddAutoMapper(...)
+  3.4 Configure middleware pipeline:
+      - app.UseStaticFiles()
+      - app.UseRouting()
+      - app.UseAuthentication() (if needed)
+      - app.UseAuthorization()
+      - app.MapControllerRoute(...)
+
+PHASE 4: CONFIGURATION MIGRATION
+  4.1 Create appsettings.json from Web.config settings
+  4.2 Move connection strings to appsettings.json
+  4.3 Create appsettings.Development.json
+  4.4 Remove Web.config (not needed in ASP.NET Core)
+  4.5 Update DbContext to use IConfiguration
+
+PHASE 5: BUILD & FIX
+  5.1 Run dotnet build, fix compilation errors
+  5.2 Update view imports (_ViewImports.cshtml)
+  5.3 Fix Razor view syntax differences
+  5.4 Update static file references (wwwroot)
+  5.5 Verify all controllers compile
+  5.6 Test application startup
+
+RISKS & MITIGATIONS:
+  - EF6 → EF Core: Seed data approach changes (use HasData or migrations)
+  - AutoMapper static API: Must refactor all Mapper.Map calls to use IMapper
+  - Identity: Simplified - only cookie auth stub, can remove or modernize
+  - Views: Minimal changes needed (Razor syntax mostly compatible)
+  - Bundle/Optimization: Replace with static files in wwwroot
