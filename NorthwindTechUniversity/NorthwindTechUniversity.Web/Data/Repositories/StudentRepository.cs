@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using NorthwindTechUniversity.Web.Models;
 
 namespace NorthwindTechUniversity.Web.Data.Repositories
@@ -16,18 +13,15 @@ namespace NorthwindTechUniversity.Web.Data.Repositories
             _context = context;
         }
 
-        // Legacy: All synchronous calls (no async/await)
         public IEnumerable<Student> GetAll()
         {
-            // TODO: make this async
             return _context.Students
                 .Include(s => s.Program)
                 .ToList();
         }
 
-        public Student GetById(int id)
+        public Student? GetById(int id)
         {
-            // TODO: make this async
             return _context.Students
                 .Include(s => s.Program)
                 .FirstOrDefault(s => s.StudentId == id);

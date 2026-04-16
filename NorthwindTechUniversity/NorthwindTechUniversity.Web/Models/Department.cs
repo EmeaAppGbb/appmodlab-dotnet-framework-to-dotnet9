@@ -10,14 +10,14 @@ namespace NorthwindTechUniversity.Web.Models
 
         [Required]
         [StringLength(100)]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
-        [Column(TypeName = "money")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Budget { get; set; }
 
         public int? HeadFacultyId { get; set; }
 
         [ForeignKey("HeadFacultyId")]
-        public virtual Faculty HeadFaculty { get; set; }
+        public virtual Faculty? HeadFaculty { get; set; }
     }
 }

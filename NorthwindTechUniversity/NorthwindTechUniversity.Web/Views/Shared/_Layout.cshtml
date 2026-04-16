@@ -4,8 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Northwind Technical University</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/css/Site.css" />
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -16,17 +15,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Northwind Tech University", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Northwind Tech University</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Students", "Index", "Student")</li>
-                    <li>@Html.ActionLink("Courses", "Index", "Course")</li>
-                    <li>@Html.ActionLink("Enrollments", "Index", "Enrollment")</li>
-                    <li>@Html.ActionLink("Faculty", "Index", "Faculty")</li>
+                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-controller="Student" asp-action="Index">Students</a></li>
+                    <li><a asp-controller="Course" asp-action="Index">Courses</a></li>
+                    <li><a asp-controller="Enrollment" asp-action="Index">Enrollments</a></li>
+                    <li><a asp-controller="Faculty" asp-action="Index">Faculty</a></li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+                <partial name="_LoginPartial" />
             </div>
         </div>
     </nav>
@@ -38,8 +37,8 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <script src="~/lib/jquery.min.js"></script>
+    <script src="~/lib/bootstrap.min.js"></script>
+    @await RenderSectionAsync("scripts", required: false)
 </body>
 </html>

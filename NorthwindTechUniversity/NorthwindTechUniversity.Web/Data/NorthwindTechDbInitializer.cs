@@ -1,14 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using NorthwindTechUniversity.Web.Models;
 
 namespace NorthwindTechUniversity.Web.Data
 {
-    public class NorthwindTechDbInitializer : DropCreateDatabaseIfModelChanges<NorthwindTechContext>
+    public static class NorthwindTechDbInitializer
     {
-        protected override void Seed(NorthwindTechContext context)
+        public static void Seed(NorthwindTechContext context)
         {
+            context.Database.EnsureCreated();
+
+            if (context.Departments.Any())
+                return; // Already seeded
+
             // Seed Departments
             var departments = new List<Department>
             {
@@ -18,7 +20,7 @@ namespace NorthwindTechUniversity.Web.Data
                 new Department { DepartmentId = 4, Name = "Mathematics", Budget = 350000m },
                 new Department { DepartmentId = 5, Name = "Liberal Arts", Budget = 300000m }
             };
-            departments.ForEach(d => context.Departments.Add(d));
+            context.Departments.AddRange(departments);
             context.SaveChanges();
 
             // Seed Faculty
@@ -35,7 +37,7 @@ namespace NorthwindTechUniversity.Web.Data
                 new Faculty { FacultyId = 9, FirstName = "Dennis", LastName = "Ritchie", Email = "dritchie@ntu.edu", DepartmentId = 1, HireDate = new DateTime(2007, 11, 5) },
                 new Faculty { FacultyId = 10, FirstName = "Ken", LastName = "Thompson", Email = "kthompson@ntu.edu", DepartmentId = 1, HireDate = new DateTime(2015, 1, 12) }
             };
-            faculty.ForEach(f => context.Faculties.Add(f));
+            context.Faculties.AddRange(faculty);
             context.SaveChanges();
 
             // Update department heads
@@ -53,7 +55,7 @@ namespace NorthwindTechUniversity.Web.Data
                 new Program { ProgramId = 2, Name = "Bachelor of Engineering", DepartmentId = 2, RequiredCredits = 128, Description = "General engineering program" },
                 new Program { ProgramId = 3, Name = "Master of Business Administration", DepartmentId = 3, RequiredCredits = 60, Description = "MBA program" }
             };
-            programs.ForEach(p => context.Programs.Add(p));
+            context.Programs.AddRange(programs);
             context.SaveChanges();
 
             // Seed Courses
@@ -80,7 +82,7 @@ namespace NorthwindTechUniversity.Web.Data
                 new Course { CourseId = 19, Title = "Cloud Computing", Credits = 3, DepartmentId = 1, MaxCapacity = 22, Description = "Cloud platforms and services" },
                 new Course { CourseId = 20, Title = "Mobile App Development", Credits = 3, DepartmentId = 1, MaxCapacity = 24, Description = "iOS and Android development" }
             };
-            courses.ForEach(c => context.Courses.Add(c));
+            context.Courses.AddRange(courses);
             context.SaveChanges();
 
             // Seed Students
@@ -109,14 +111,14 @@ namespace NorthwindTechUniversity.Web.Data
                     ProgramId = (i % 3) + 1
                 });
             }
-            students.ForEach(s => context.Students.Add(s));
+            context.Students.AddRange(students);
             context.SaveChanges();
 
-            // Seed Enrollments (100 enrollments)
+            // Seed Enrollments
             var enrollments = new List<Enrollment>();
             var semesters = new[] { "Fall 2023", "Spring 2024", "Fall 2024" };
-            var grades = new[] { "A", "A-", "B+", "B", "B-", "C+", "C", null }; // null = in progress
-            var random = new Random(42); // Fixed seed for consistency
+            var grades = new[] { "A", "A-", "B+", "B", "B-", "C+", "C", null as string };
+            var random = new Random(42);
 
             for (int i = 0; i < 100; i++)
             {
@@ -130,10 +132,8 @@ namespace NorthwindTechUniversity.Web.Data
                     EnrollmentDate = new DateTime(2023, 8 + (i % 3) * 4, 15)
                 });
             }
-            enrollments.ForEach(e => context.Enrollments.Add(e));
+            context.Enrollments.AddRange(enrollments);
             context.SaveChanges();
-
-            base.Seed(context);
         }
     }
 }

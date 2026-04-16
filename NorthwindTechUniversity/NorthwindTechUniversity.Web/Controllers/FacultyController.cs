@@ -1,5 +1,4 @@
-using System.Linq;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using NorthwindTechUniversity.Web.Data;
 
 namespace NorthwindTechUniversity.Web.Controllers
@@ -14,20 +13,10 @@ namespace NorthwindTechUniversity.Web.Controllers
         }
 
         // GET: Faculty
-        public ActionResult Index()
+        public IActionResult Index()
         {
-            // Legacy: Direct LINQ queries in controller (no service layer)
             var faculty = _context.Faculties.ToList();
             return View(faculty);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _context?.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

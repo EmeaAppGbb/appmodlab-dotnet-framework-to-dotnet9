@@ -1,7 +1,5 @@
-using System;
-using System.Data.Entity;
-using System.Linq;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NorthwindTechUniversity.Web.Data;
 using NorthwindTechUniversity.Web.Data.Repositories;
 using NorthwindTechUniversity.Web.Models;
@@ -20,14 +18,14 @@ namespace NorthwindTechUniversity.Web.Controllers
         }
 
         // GET: Course
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var courses = _unitOfWork.Courses.GetAll();
             return View(courses);
         }
 
         // GET: Course/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             ViewBag.Departments = new SelectList(_context.Departments.ToList(), "DepartmentId", "Name");
             return View();
@@ -36,7 +34,7 @@ namespace NorthwindTechUniversity.Web.Controllers
         // POST: Course/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Course course)
+        public IActionResult Create(Course course)
         {
             if (ModelState.IsValid)
             {
@@ -54,15 +52,6 @@ namespace NorthwindTechUniversity.Web.Controllers
 
             ViewBag.Departments = new SelectList(_context.Departments.ToList(), "DepartmentId", "Name", course.DepartmentId);
             return View(course);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _unitOfWork?.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

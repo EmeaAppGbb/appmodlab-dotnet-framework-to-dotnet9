@@ -1,13 +1,10 @@
-using System;
-
 namespace NorthwindTechUniversity.Web.Data.Repositories
 {
-    // Legacy: Unit of Work pattern wrapping EF6 (which already has UoW via DbContext!)
     public class UnitOfWork : IDisposable
     {
         private readonly NorthwindTechContext _context;
-        private StudentRepository _studentRepository;
-        private CourseRepository _courseRepository;
+        private StudentRepository? _studentRepository;
+        private CourseRepository? _courseRepository;
 
         public UnitOfWork(NorthwindTechContext context)
         {
@@ -18,8 +15,7 @@ namespace NorthwindTechUniversity.Web.Data.Repositories
         {
             get
             {
-                if (_studentRepository == null)
-                    _studentRepository = new StudentRepository(_context);
+                _studentRepository ??= new StudentRepository(_context);
                 return _studentRepository;
             }
         }
@@ -28,15 +24,13 @@ namespace NorthwindTechUniversity.Web.Data.Repositories
         {
             get
             {
-                if (_courseRepository == null)
-                    _courseRepository = new CourseRepository(_context);
+                _courseRepository ??= new CourseRepository(_context);
                 return _courseRepository;
             }
         }
 
         public void Save()
         {
-            // TODO: make this async
             _context.SaveChanges();
         }
 

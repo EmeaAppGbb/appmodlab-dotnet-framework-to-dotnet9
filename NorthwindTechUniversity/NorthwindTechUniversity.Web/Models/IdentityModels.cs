@@ -1,24 +1,12 @@
-using Microsoft.AspNet.Identity.EntityFramework;
-
 namespace NorthwindTechUniversity.Web.Models
 {
-    // ASP.NET Identity 2.0 models
-    public class ApplicationUser : IdentityUser
+    // Placeholder for future ASP.NET Core Identity integration
+    public class ApplicationUser
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-    }
-
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
-
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
+        public string? Id { get; set; }
+        public string? UserName { get; set; }
+        public string? Email { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
     }
 }

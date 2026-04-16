@@ -10,7 +10,7 @@ namespace NorthwindTechUniversity.Web.Models
 
         [Required]
         [StringLength(100)]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         [Required]
         public int Credits { get; set; }
@@ -18,11 +18,11 @@ namespace NorthwindTechUniversity.Web.Models
         public int DepartmentId { get; set; }
 
         [ForeignKey("DepartmentId")]
-        public virtual Department Department { get; set; }
+        public virtual Department? Department { get; set; }
 
         public int MaxCapacity { get; set; }
 
         [StringLength(500)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }

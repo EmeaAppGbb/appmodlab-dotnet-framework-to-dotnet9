@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using NorthwindTechUniversity.Web.Models;
 
 namespace NorthwindTechUniversity.Web.Data.Repositories
@@ -23,7 +20,7 @@ namespace NorthwindTechUniversity.Web.Data.Repositories
                 .ToList();
         }
 
-        public Course GetById(int id)
+        public Course? GetById(int id)
         {
             return _context.Courses
                 .Include(c => c.Department)

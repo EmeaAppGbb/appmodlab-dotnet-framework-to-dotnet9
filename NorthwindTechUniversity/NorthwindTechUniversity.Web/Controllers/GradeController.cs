@@ -1,9 +1,6 @@
-using System;
-using System.Data.Entity;
-using System.Linq;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NorthwindTechUniversity.Web.Data;
-using NorthwindTechUniversity.Web.Models;
 
 namespace NorthwindTechUniversity.Web.Controllers
 {
@@ -17,7 +14,7 @@ namespace NorthwindTechUniversity.Web.Controllers
         }
 
         // GET: Grade/Entry
-        public ActionResult Entry(int enrollmentId)
+        public IActionResult Entry(int enrollmentId)
         {
             var enrollment = _context.Enrollments
                 .Include(e => e.Student)
@@ -26,7 +23,7 @@ namespace NorthwindTechUniversity.Web.Controllers
 
             if (enrollment == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
 
             return View(enrollment);
@@ -35,7 +32,7 @@ namespace NorthwindTechUniversity.Web.Controllers
         // POST: Grade/Entry
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Entry(int enrollmentId, string grade)
+        public IActionResult Entry(int enrollmentId, string grade)
         {
             try
             {
@@ -54,15 +51,6 @@ namespace NorthwindTechUniversity.Web.Controllers
                 TempData["Error"] = "Error saving grade: " + ex.Message;
                 return RedirectToAction("Entry", new { enrollmentId = enrollmentId });
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _context?.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

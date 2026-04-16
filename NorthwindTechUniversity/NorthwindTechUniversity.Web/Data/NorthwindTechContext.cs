@@ -1,38 +1,35 @@
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using NorthwindTechUniversity.Web.Models;
 
 namespace NorthwindTechUniversity.Web.Data
 {
     public class NorthwindTechContext : DbContext
     {
-        public NorthwindTechContext() : base("NorthwindTechContext")
+        public NorthwindTechContext(DbContextOptions<NorthwindTechContext> options)
+            : base(options)
         {
-            // Legacy: Disable lazy loading for performance (or so we thought in 2015)
-            Configuration.LazyLoadingEnabled = false;
-            Configuration.ProxyCreationEnabled = false;
         }
 
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Course> Courses { get; set; }
-        public DbSet<Enrollment> Enrollments { get; set; }
-        public DbSet<Faculty> Faculties { get; set; }
-        public DbSet<Department> Departments { get; set; }
-        public DbSet<Program> Programs { get; set; }
+        public DbSet<Student> Students { get; set; } = null!;
+        public DbSet<Course> Courses { get; set; } = null!;
+        public DbSet<Enrollment> Enrollments { get; set; } = null!;
+        public DbSet<Faculty> Faculties { get; set; } = null!;
+        public DbSet<Department> Departments { get; set; } = null!;
+        public DbSet<Program> Programs { get; set; } = null!;
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure relationships
             modelBuilder.Entity<Enrollment>()
-                .HasRequired(e => e.Student)
+                .HasOne(e => e.Student)
                 .WithMany()
                 .HasForeignKey(e => e.StudentId)
-                .WillCascadeOnDelete(false);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Enrollment>()
-                .HasRequired(e => e.Course)
+                .HasOne(e => e.Course)
                 .WithMany()
                 .HasForeignKey(e => e.CourseId)
-                .WillCascadeOnDelete(false);
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
         }

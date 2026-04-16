@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindTechUniversity.Web.Models.ViewModels
@@ -10,17 +9,17 @@ namespace NorthwindTechUniversity.Web.Models.ViewModels
         [Display(Name = "Student")]
         public int StudentId { get; set; }
 
-        public string StudentName { get; set; }
+        public string? StudentName { get; set; }
 
         [Display(Name = "Course")]
         public int CourseId { get; set; }
 
-        public string CourseTitle { get; set; }
+        public string? CourseTitle { get; set; }
 
         [Required]
-        public string Semester { get; set; }
+        public string Semester { get; set; } = string.Empty;
 
-        public string Grade { get; set; }
+        public string? Grade { get; set; }
 
         [Display(Name = "Enrollment Date")]
         [DataType(DataType.Date)]

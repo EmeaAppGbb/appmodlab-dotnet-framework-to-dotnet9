@@ -1,8 +1,6 @@
-using System;
-using System.Data.Entity;
-using System.Linq;
-using System.Web.Mvc;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NorthwindTechUniversity.Web.Data;
 using NorthwindTechUniversity.Web.Data.Repositories;
 using NorthwindTechUniversity.Web.Models;
@@ -14,38 +12,38 @@ namespace NorthwindTechUniversity.Web.Controllers
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly NorthwindTechContext _context;
+        private readonly IMapper _mapper;
 
-        // Legacy: Mixed use of repository pattern and direct DbContext access
-        public StudentController(UnitOfWork unitOfWork, NorthwindTechContext context)
+        public StudentController(UnitOfWork unitOfWork, NorthwindTechContext context, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: Student
-        public ActionResult Index()
+        public IActionResult Index()
         {
-            // Legacy: Synchronous repository call
             var students = _unitOfWork.Students.GetAll();
-            var viewModels = students.Select(s => Mapper.Map<StudentViewModel>(s)).ToList();
+            var viewModels = students.Select(s => _mapper.Map<StudentViewModel>(s)).ToList();
             return View(viewModels);
         }
 
         // GET: Student/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             var student = _unitOfWork.Students.GetById(id);
             if (student == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
 
-            var viewModel = Mapper.Map<StudentViewModel>(student);
+            var viewModel = _mapper.Map<StudentViewModel>(student);
             return View(viewModel);
         }
 
         // GET: Student/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             ViewBag.Programs = new SelectList(_context.Programs.ToList(), "ProgramId", "Name");
             return View();
@@ -54,23 +52,22 @@ namespace NorthwindTechUniversity.Web.Controllers
         // POST: Student/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(StudentViewModel model)
+        public IActionResult Create(StudentViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var student = Mapper.Map<Student>(model);
+                    var student = _mapper.Map<Student>(model);
                     student.EnrollmentDate = DateTime.Now;
                     
                     _unitOfWork.Students.Add(student);
-                    _unitOfWork.Save(); // Synchronous save
+                    _unitOfWork.Save();
                     
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)
                 {
-                    // Legacy: Poor error handling
                     ModelState.AddModelError("", "Unable to save changes. " + ex.Message);
                 }
             }
@@ -80,15 +77,15 @@ namespace NorthwindTechUniversity.Web.Controllers
         }
 
         // GET: Student/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
             var student = _unitOfWork.Students.GetById(id);
             if (student == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
 
-            var viewModel = Mapper.Map<StudentViewModel>(student);
+            var viewModel = _mapper.Map<StudentViewModel>(student);
             ViewBag.Programs = new SelectList(_context.Programs.ToList(), "ProgramId", "Name", student.ProgramId);
             return View(viewModel);
         }
@@ -96,13 +93,13 @@ namespace NorthwindTechUniversity.Web.Controllers
         // POST: Student/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(StudentViewModel model)
+        public IActionResult Edit(StudentViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var student = Mapper.Map<Student>(model);
+                    var student = _mapper.Map<Student>(model);
                     _unitOfWork.Students.Update(student);
                     _unitOfWork.Save();
                     
@@ -119,46 +116,39 @@ namespace NorthwindTechUniversity.Web.Controllers
         }
 
         // GET: Student/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
             var student = _unitOfWork.Students.GetById(id);
             if (student == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
 
-            var viewModel = Mapper.Map<StudentViewModel>(student);
+            var viewModel = _mapper.Map<StudentViewModel>(student);
             return View(viewModel);
         }
 
         // POST: Student/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             try
             {
                 var student = _unitOfWork.Students.GetById(id);
-                _unitOfWork.Students.Remove(student);
-                _unitOfWork.Save();
+                if (student != null)
+                {
+                    _unitOfWork.Students.Remove(student);
+                    _unitOfWork.Save();
+                }
                 
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                // TODO: Log this error properly
                 TempData["Error"] = "Unable to delete. " + ex.Message;
                 return RedirectToAction("Delete", new { id = id });
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _unitOfWork?.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

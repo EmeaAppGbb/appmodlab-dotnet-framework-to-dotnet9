@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindTechUniversity.Web.Models.ViewModels
@@ -9,15 +8,15 @@ namespace NorthwindTechUniversity.Web.Models.ViewModels
 
         [Required]
         [Display(Name = "First Name")]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "Last Name")]
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
 
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "Date of Birth")]
@@ -31,6 +30,6 @@ namespace NorthwindTechUniversity.Web.Models.ViewModels
         [Display(Name = "Program")]
         public int? ProgramId { get; set; }
 
-        public string ProgramName { get; set; }
+        public string? ProgramName { get; set; }
     }
 }

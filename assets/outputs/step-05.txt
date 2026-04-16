@@ -1,0 +1,40 @@
+Step 05: Migrate Namespaces & APIs
+===================================
+
+NAMESPACE CHANGES:
+- System.Web.Mvc → Microsoft.AspNetCore.Mvc
+- System.Data.Entity → Microsoft.EntityFrameworkCore
+- ActionResult → IActionResult
+- HttpNotFound() → NotFound()
+- SelectList → Microsoft.AspNetCore.Mvc.Rendering.SelectList
+- AutoMapper static Mapper.Map<T>() → IMapper instance injection
+
+CONTROLLER CHANGES:
+- Removed Dispose() overrides (DI handles lifetime)
+- Replaced HttpNotFound() with NotFound()
+- Replaced static Mapper.Map with injected IMapper
+- All 7 controllers updated to ASP.NET Core
+
+DATA LAYER CHANGES:
+- DbContext: Constructor injection with DbContextOptions<T>
+- DbModelBuilder → ModelBuilder (EF Core Fluent API)
+- HasRequired/WillCascadeOnDelete → HasOne/OnDelete(DeleteBehavior.Restrict)
+- DbInitializer: Static class with Seed() method instead of DropCreateDatabaseIfModelChanges
+- Repository: using Microsoft.EntityFrameworkCore for Include/EntityState
+
+MODEL CHANGES:
+- Added nullable annotations (string? for optional fields)
+- Added default values (string.Empty for required strings)
+- Column(TypeName = "money") → Column(TypeName = "decimal(18,2)")
+
+VIEW CHANGES:
+- @Styles.Render → <link> tags
+- @Scripts.Render → <script> tags
+- @Html.Partial → <partial> tag helper
+- @Html.ActionLink → <a asp-controller asp-action> tag helpers (layout)
+- @RenderSection → @await RenderSectionAsync
+- Request.IsAuthenticated → User.Identity?.IsAuthenticated
+- Added _ViewImports.cshtml with tag helpers
+
+AUTOMAPPER:
+- Static Mapper.Initialize() → Profile-based MappingProfile class

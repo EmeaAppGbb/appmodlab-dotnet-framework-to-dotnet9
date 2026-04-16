@@ -1,5 +1,4 @@
-using System.Linq;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using NorthwindTechUniversity.Web.Data;
 using NorthwindTechUniversity.Web.Models.ViewModels;
 
@@ -14,9 +13,8 @@ namespace NorthwindTechUniversity.Web.Controllers
             _context = context;
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
-            // Legacy: Synchronous database calls on the UI thread
             var model = new DashboardViewModel
             {
                 TotalStudents = _context.Students.Count(),
