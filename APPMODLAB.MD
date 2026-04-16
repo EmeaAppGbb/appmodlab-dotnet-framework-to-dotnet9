@@ -8,7 +8,7 @@ services: ["Azure App Service", "Azure SQL Database", "Application Insights"]
 languages: [".NET", "C#"]
 frameworks: ["ASP.NET Core", "Entity Framework Core"]
 modernizationTools: [".NET Upgrade Assistant"]
-agenticTools: []
+agenticTools: ["GitHub Copilot CLI"]
 tags: ["migration", "entity-framework", "identity", "dependency-injection"]
 extensions: ["github.copilot"]
 thumbnail: ""
@@ -123,3 +123,31 @@ Shared layout (Bootstrap 3 navbar) and the Home/Index dashboard view:
 Legacy `.csproj` format targeting .NET Framework 4.8 with `System.Web` references:
 
 ![Project File](assets/screenshots/07-csproj.png)
+
+---
+
+## Solution Walkthrough
+
+The completed migration is available on the `solution-final` branch. Each step is tagged for easy navigation:
+
+| Step | Tag | Description |
+|------|-----|-------------|
+| 01 | `step-01-explore-legacy` | Explore the legacy .NET Framework 4.8 codebase and verify MSBuild |
+| 02 | `step-02-analyze-deps` | Analyze NuGet packages and framework-specific API dependencies |
+| 03 | `step-03-migration-plan` | Generate a comprehensive migration plan |
+| 04 | `step-04-update-projects` | Convert .csproj to SDK-style, target net9.0, add PackageReferences |
+| 05 | `step-05-migrate-apis` | Update namespaces (System.Web → Microsoft.AspNetCore), models, views |
+| 06 | `step-06-update-di` | Create Program.cs with built-in DI (replaces Unity + OWIN + Global.asax) |
+| 07 | `step-07-migrate-config` | Migrate Web.config → appsettings.json |
+| 08 | `step-08-build-fix` | Build with `dotnet build`, fix remaining issues (0 errors, 0 warnings) |
+
+### Key Migration Changes
+
+- **Project**: Legacy .csproj → SDK-style targeting `net9.0`
+- **ORM**: Entity Framework 6 → Entity Framework Core 9
+- **DI**: Unity 5.11 → Built-in `Microsoft.Extensions.DependencyInjection`
+- **Mapper**: AutoMapper 6 (static API) → AutoMapper 12 (Profile + DI)
+- **Auth**: OWIN Cookie Auth → ASP.NET Core middleware
+- **Config**: Web.config → `appsettings.json`
+- **Hosting**: IIS/System.Web → Kestrel/WebApplication
+- **Views**: `@Styles.Render`/`@Scripts.Render` → static file references + tag helpers
