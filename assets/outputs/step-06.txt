@@ -1,0 +1,33 @@
+Step 06: Update Dependency Injection
+=====================================
+
+CHANGES:
+1. Created Program.cs with WebApplication builder pattern
+   - Replaces Global.asax.cs Application_Start()
+   - Replaces App_Start/UnityConfig.cs
+   - Replaces Startup.cs (OWIN)
+
+2. Service registrations (built-in DI replaces Unity):
+   - AddControllersWithViews() - MVC services
+   - AddDbContext<NorthwindTechContext>() - EF Core with SQL Server (Scoped)
+   - AddScoped<IRepository<Student>, StudentRepository>() - Repository pattern
+   - AddScoped<IRepository<Course>, CourseRepository>() - Repository pattern
+   - AddScoped<UnitOfWork>() - Unit of Work
+   - AddAutoMapper(typeof(MappingProfile)) - Instance-based AutoMapper
+
+3. Middleware pipeline (replaces RouteConfig, FilterConfig, BundleConfig):
+   - UseHttpsRedirection()
+   - UseStaticFiles() (replaces BundleConfig)
+   - UseRouting()
+   - UseAuthorization()
+   - MapControllerRoute (default: {controller=Home}/{action=Index}/{id?})
+
+4. Database initialization:
+   - Seed on startup using scope pattern
+   - NorthwindTechDbInitializer.Seed() called in startup scope
+
+REMOVED:
+   - Unity container (5.11.10)
+   - Unity.Mvc5 DependencyResolver
+   - OWIN pipeline
+   - Global.asax Application_Start/Application_Error
