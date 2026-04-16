@@ -1,0 +1,23 @@
+Step 07: Migrate Configuration
+================================
+
+CHANGES:
+1. Created appsettings.json (replaces Web.config):
+   - Connection string: NorthwindTechContext → SQL Server LocalDB
+   - Updated from AttachDbFilename to Database= pattern (EF Core compatible)
+   - Added TrustServerCertificate=True for local dev
+   - Logging configuration: Default=Information, EF Core=Information
+
+2. Created appsettings.Development.json:
+   - Development-specific connection string (separate database)
+   - Debug-level logging for development
+   - EF Core command logging enabled
+
+REMOVED (from Web.config):
+   - <entityFramework> section → Configured in Program.cs
+   - <system.web> section → Not needed in ASP.NET Core
+   - <system.webServer> section → Not needed (Kestrel)
+   - <system.codedom> section → Not needed
+   - <runtime> assembly binding redirects → Not needed (SDK-style)
+   - <appSettings> → Moved to appsettings.json
+   - <connectionStrings> → Moved to appsettings.json
