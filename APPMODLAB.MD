@@ -11,7 +11,7 @@ modernizationTools: [".NET Upgrade Assistant"]
 agenticTools: ["GitHub Copilot CLI"]
 tags: ["migration", "entity-framework", "identity", "dependency-injection"]
 extensions: ["github.copilot"]
-thumbnail: ""
+thumbnail: "https://raw.githubusercontent.com/EmeaAppGbb/appmodlab-dotnet-framework-to-dotnet9/main/assets/thumbnail-gpt-image.png"
 video: ""
 version: "1.0.0"
 ---
